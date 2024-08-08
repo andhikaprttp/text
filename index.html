@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Andhika Text</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        h1 {
+            color: #2c3e50;
+        }
+        textarea {
+            width: 80%;
+            height: 150px;
+            margin-bottom: 10px;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #27ae60;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 5px;
+        }
+        button:hover {
+            background-color: #2ecc71;
+        }
+        pre {
+            width: 80%;
+            white-space: pre-wrap;
+            background-color: #ecf0f1;
+            padding: 10px;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Andhika Text</h1>
+        <p>Program untuk mendukung pembuatan Makalah UKK TKJ 1</p>
+    </header>
+    <main>
+        <textarea id="markdownInput" placeholder="Masukkan teks Markdown di sini..."></textarea>
+        <div>
+            <button onclick="convertToPlainText()">Hapus Format</button>
+            <button onclick="copyToClipboard()">Salin</button>
+        </div>
+        <pre id="plainTextOutput"></pre>
+    </main>
+
+    <script>
+        function convertToPlainText() {
+            const markdownInput = document.getElementById('markdownInput').value;
+            const plainText = markdownInput
+                .replace(/([*_~`#])/g, '')
+                .replace(/\[(.*?)\]\(.*?\)/g, '$1') 
+                .replace(/\!\[.*?\]\(.*?\)/g, '')  
+                .replace(/\n+/g, '\n');
+            document.getElementById('plainTextOutput').innerText = plainText;
+        }
+
+        function copyToClipboard() {
+            const plainTextOutput = document.getElementById('plainTextOutput').innerText;
+            const textArea = document.createElement('textarea');
+            textArea.value = plainTextOutput;
+            document.body.appendChild(textArea);
+            textArea.select();
+            document.execCommand('copy');
+            document.body.removeChild(textArea);
+            alert('Teks berhasil disalin ke clipboard!');
+        }
+    </script>
+</body>
+</html>
